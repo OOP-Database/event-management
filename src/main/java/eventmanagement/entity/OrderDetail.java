@@ -14,12 +14,12 @@ public class OrderDetail {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("orderId")
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "order_id", nullable = false, columnDefinition = "VARCHAR(20)")
     private Order order;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("ticketId")
-    @JoinColumn(name = "ticket_id")
+    @JoinColumn(name = "ticket_id", nullable = false, columnDefinition = "VARCHAR(20)")
     private Ticket ticket;
 
     @Column(name = "quantity", nullable = false)

@@ -12,15 +12,15 @@ public class Artist {
     @Column(name = "artist_id", length = 20)
     private String artistId;
 
-    @Column(name = "artist_name", nullable = false, length = 200)
+    @Column(name = "artist_name", nullable = false, length = 255)
     private String artistName;
 
-    @Column(name = "nationality", nullable = false, length = 100)
+    @Column(name = "nationality", nullable = false, length = 255)
     private String nationality;
 
-    @Column(name = "image", nullable = false, length = 1000)
+    @Column(name = "image", nullable = false, columnDefinition = "TEXT")
     private String image;
 
-    @Column(name = "bio", length = 1000)
+    @Column(name = "bio", columnDefinition = "TEXT")
     private String bio;
 }

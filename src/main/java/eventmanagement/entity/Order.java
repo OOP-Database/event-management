@@ -26,10 +26,10 @@ public class Order {
     @Column(name = "total_amount", nullable = false, precision = 15, scale = 0)
     private BigDecimal totalAmount = BigDecimal.ZERO;
 
-    @Column(name = "status", nullable = false, length = 100)
+    @Column(name = "status", nullable = false, length = 255)
     private String status;
 
-    @Column(name = "payment_method", length = 500)
+    @Column(name = "payment_method", columnDefinition = "TEXT")
     private String paymentMethod;
 
     @Column(name = "payment_at")

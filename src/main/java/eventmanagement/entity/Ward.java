@@ -12,6 +12,6 @@ public class Ward {
     @Column(name = "ward_id", length = 20)
     private String wardId;
 
-    @Column(name = "ward_name", nullable = false, unique = true, length = 100)
+    @Column(name = "ward_name", nullable = false, unique = true, length = 255)
     private String wardName;
 }

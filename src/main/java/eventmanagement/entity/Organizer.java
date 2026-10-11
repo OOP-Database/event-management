@@ -9,9 +9,9 @@ import lombok.*;
 @Getter @Setter @NoArgsConstructor
 public class Organizer extends People {
 
-    @Column(name = "tax_code", nullable = false, unique = true, length = 100)
+    @Column(name = "tax_code", nullable = false, unique = true, length = 255)
     private String taxCode;
 
-    @Column(name = "address", nullable = false, length = 200)
+    @Column(name = "address", nullable = false, columnDefinition = "TEXT")
     private String address;
 }

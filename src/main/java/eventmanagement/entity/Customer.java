@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Getter @Setter @NoArgsConstructor
 public class Customer extends People {
 
-    @Column(name = "gender", nullable = false, length = 10)
+    @Column(name = "gender", nullable = false, length = 255)
     private String gender;
 
     @Column(name = "date_of_birth", nullable = false)

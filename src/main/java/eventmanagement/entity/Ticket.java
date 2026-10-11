@@ -17,13 +17,13 @@ public class Ticket {
     @JoinColumn(name = "schedule_id", nullable = false)
     private EventSchedule schedule;
 
-    @Column(name = "ticket_name", nullable = false, length = 200)
+    @Column(name = "ticket_name", nullable = false, length = 255)
     private String ticketName;
 
     @Column(name = "price", nullable = false, precision = 15, scale = 0)
     private BigDecimal price;
 
-    @Column(name = "`desc`", nullable = false, length = 2000)
+    @Column(name = "`desc`", nullable = false, columnDefinition = "TEXT")
     private String desc;
 
     @Column(name = "total_quantity", nullable = false)

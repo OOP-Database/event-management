@@ -27,6 +27,6 @@ public class EventSchedule {
     @Column(name = "end_datetime", nullable = false)
     private LocalDateTime endDatetime;
 
-    @Column(name = "status", nullable = false, length = 50)
+    @Column(name = "status", nullable = false, length = 255)
     private String status;
 }

@@ -16,15 +16,15 @@ public class Event {
     @JoinColumn(name = "organizer_id", nullable = false)
     private Organizer organizer;
 
-    @Column(name = "title", nullable = false, length = 1000)
+    @Column(name = "title", nullable = false, columnDefinition = "TEXT")
     private String title;
 
-    @Column(name = "image", nullable = false, length = 1000)
+    @Column(name = "image", nullable = false, columnDefinition = "TEXT")
     private String image;
 
-    @Column(name = "`desc`", nullable = false, length = 1000)
+    @Column(name = "`desc`", nullable = false, columnDefinition = "TEXT")
     private String desc;
 
-    @Column(name = "create_type", length = 100)
+    @Column(name = "create_type", length = 255)
     private String createType;
 }

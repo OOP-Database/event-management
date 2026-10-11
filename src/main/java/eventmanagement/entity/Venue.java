@@ -12,10 +12,10 @@ public class Venue {
     @Column(name = "venue_id", length = 20)
     private String venueId;
 
-    @Column(name = "venue_name", nullable = false, length = 1000)
+    @Column(name = "venue_name", nullable = false, columnDefinition = "TEXT")
     private String venueName;
 
-    @Column(name = "address", nullable = false, length = 200)
+    @Column(name = "address", nullable = false, columnDefinition = "TEXT")
     private String address;
 
     @Column(name = "capacity", nullable = false)
@@ -25,6 +25,6 @@ public class Venue {
     @JoinColumn(name = "ward_id", nullable = false)
     private Ward ward;
 
-    @Column(name = "city", length = 20)
+    @Column(name = "city", length = 255)
     private String city = "Hà Nội";
 }
