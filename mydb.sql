@@ -55,7 +55,7 @@ CREATE TABLE `event` (
     `status` 		VARCHAR(20) NOT NULL DEFAULT 'PENDING',
     FOREIGN KEY (organizer_id) REFERENCES organizer(organizer_id),
 	CHECK (`status` IN ('PENDING', 'APPROVED', 'REJECTED')),
-    CHECK (create_type IN ('WEEKLY', 'MONTHLY', 'YEARLY'))
+    CHECK (create_type IN ('WEEKLY', 'MONTHLY', 'YEARLY')));
 
 CREATE TABLE event_schedule (
     schedule_id 	VARCHAR(20) PRIMARY KEY,
