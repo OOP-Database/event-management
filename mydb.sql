@@ -30,14 +30,14 @@ CREATE TABLE customer (
 );
 
 CREATE TABLE province (
-    province_id 		VARCHAR(20) PRIMARY KEY,        
-    province_name 	VARCHAR(100) NOT NULL UNIQUE  
+    province_id 		VARCHAR(20) PRIMARY KEY,
+    province_name 	VARCHAR(100) NOT NULL UNIQUE
 );
 
 CREATE TABLE ward (
-    ward_id 		VARCHAR(20) PRIMARY KEY,   
+    ward_id 		VARCHAR(20) PRIMARY KEY,
     ward_name		VARCHAR(100) NOT NULL,
-    province_id 		VARCHAR(20) NOT NULL,            
+    province_id 		VARCHAR(20) NOT NULL,
     FOREIGN KEY (province_id) REFERENCES province(province_id)
 );
 
@@ -248,7 +248,6 @@ INSERT INTO venue (venue_id, venue_name, address, capacity, ward_id) VALUES
 ('DD08', 'Cung Thể thao Quần Ngựa', 'Đường Văn Cao, Hà Nội', 5000, 'P003'),
 ('DD09', 'Hoàng thành Thăng Long', 'Số 19C Hoàng Diệu, Hà Nội', 3000, 'P003'),
 ('DD10', 'Trống Đồng Palace', 'Hà Nội', 1500, 'P001');
- 
 
 INSERT INTO artist (artist_id, artist_name, nationality, image, bio) VALUES
 ('AR01', 'Sơn Tùng M-TP', 'Việt Nam', '/images/artists/son-tung-mtp.jpg', 'Ca sĩ, nhạc sĩ và nhà sản xuất âm nhạc.'),
