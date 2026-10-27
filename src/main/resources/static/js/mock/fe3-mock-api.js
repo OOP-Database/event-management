@@ -35,12 +35,30 @@ function handleMock(method, url, body) {
 
   if (method === 'POST' && url === '/api/orders') return MOCK_ORDERS[0];
 
+  // Admin: danh sách tất cả đơn, kèm tên khách hàng (giả định, cần hỏi BE5 tên trường thật)
+  if (method === 'GET' && url.startsWith('/api/admin/orders')) {
+    const names = { DH001: 'Nguyễn Văn An', DH002: 'Trần Thị Bình', DH003: 'Lê Văn Cường' };
+    const status = new URLSearchParams(url.split('?')[1] || '').get('status');
+    const list = status ? MOCK_ORDERS.filter(o => o.status === status) : MOCK_ORDERS;
+    return list.map(o => Object.assign({}, o, { customerName: names[o.orderId] || '' }));
+  }
+
+  // Hoàn tiền: chỉ nhận đơn "Đã thanh toán", giống quy tắc của BE5
+  const refund = url.match(/^\/api\/admin\/orders\/(\w+)\/refund$/);
+  if (method === 'PUT' && refund) {
+    const order = MOCK_ORDERS.find(o => o.orderId === refund[1]);
+    if (!order || order.status !== 'Đã thanh toán') {
+      throw new Error('Chỉ hoàn tiền cho đơn đã thanh toán');
+    }
+    order.status = 'Đã hoàn tiền';
+    return null;
+  }
+
   if (method === 'GET' && url.startsWith('/api/admin/events')) {
     const status = new URLSearchParams(url.split('?')[1] || '').get('status');
     return status ? MOCK_EVENTS.filter(e => e.status === status) : MOCK_EVENTS;
   }
 
-  // Duyệt hoặc từ chối: chỉ nhận sự kiện đang PENDING, giống quy tắc của BE2
   const act = url.match(/^\/api\/admin\/events\/(\w+)\/(approve|reject)$/);
   if (method === 'PUT' && act) {
     const ev = MOCK_EVENTS.find(e => e.eventId === act[1]);
