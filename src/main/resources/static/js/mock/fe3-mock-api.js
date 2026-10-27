@@ -25,8 +25,10 @@ function mockApi(method, url, body) {
 }
 
 function handleMock(method, url, body) {
-  if (method === 'GET' && url.startsWith('/api/orders/me')) return MOCK_ORDERS;
-
+  if (method === 'GET' && url.startsWith('/api/orders/me')) {
+  const status = new URLSearchParams(url.split('?')[1] || '').get('status');
+  return status ? MOCK_ORDERS.filter(o => o.status === status) : MOCK_ORDERS;
+}
   const m = url.match(/^\/api\/orders\/(\w+)$/);
   if (method === 'GET' && m) return MOCK_ORDERS.find(o => o.orderId === m[1]);
 
