@@ -26,17 +26,32 @@ function mockApi(method, url, body) {
 
 function handleMock(method, url, body) {
   if (method === 'GET' && url.startsWith('/api/orders/me')) {
-  const status = new URLSearchParams(url.split('?')[1] || '').get('status');
-  return status ? MOCK_ORDERS.filter(o => o.status === status) : MOCK_ORDERS;
-}
+    const status = new URLSearchParams(url.split('?')[1] || '').get('status');
+    return status ? MOCK_ORDERS.filter(o => o.status === status) : MOCK_ORDERS;
+  }
+
   const m = url.match(/^\/api\/orders\/(\w+)$/);
   if (method === 'GET' && m) return MOCK_ORDERS.find(o => o.orderId === m[1]);
 
   if (method === 'POST' && url === '/api/orders') return MOCK_ORDERS[0];
 
-  if (/\/(pay|cancel|approve|reject)$/.test(url)) return null;
+  if (method === 'GET' && url.startsWith('/api/admin/events')) {
+    const status = new URLSearchParams(url.split('?')[1] || '').get('status');
+    return status ? MOCK_EVENTS.filter(e => e.status === status) : MOCK_EVENTS;
+  }
 
-  if (method === 'GET' && url.startsWith('/api/admin/events')) return MOCK_EVENTS;
+  // Duyệt hoặc từ chối: chỉ nhận sự kiện đang PENDING, giống quy tắc của BE2
+  const act = url.match(/^\/api\/admin\/events\/(\w+)\/(approve|reject)$/);
+  if (method === 'PUT' && act) {
+    const ev = MOCK_EVENTS.find(e => e.eventId === act[1]);
+    if (!ev || ev.status !== 'PENDING') {
+      throw new Error('Chỉ duyệt hoặc từ chối sự kiện đang PENDING');
+    }
+    ev.status = act[2] === 'approve' ? 'APPROVED' : 'REJECTED';
+    return null;
+  }
+
+  if (/\/(pay|cancel)$/.test(url)) return null;
 
   throw new Error('Mock chưa có: ' + method + ' ' + url);
 }
