@@ -1,17 +1,21 @@
 package eventmanagement.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "`order`")
-@Getter @Setter @NoArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
 public class Order {
-
     @Id
     @Column(name = "order_id", length = 20)
     private String orderId;
@@ -26,15 +30,28 @@ public class Order {
     @Column(name = "total_amount", nullable = false, precision = 15, scale = 0)
     private BigDecimal totalAmount = BigDecimal.ZERO;
 
-    @Column(name = "status", nullable = false, length = 255)
+    @Column(name = "status", nullable = false, length = 100)
     private String status;
 
-    @Column(name = "payment_method", columnDefinition = "TEXT")
+    @Column(name = "payment_method", length = 500)
     private String paymentMethod;
 
     @Column(name = "payment_at")
     private LocalDateTime paymentAt;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderDetail> details = new ArrayList<>();
+
+    public void addDetail(OrderDetail detail) {
+        if (detail == null) return;
+        details.add(detail);
+        detail.setOrder(this);
+    }
+
+    public void removeDetail(OrderDetail detail) {
+        if (detail == null) return;
+        details.remove(detail);
+        detail.setOrder(null);
+    }
 }
